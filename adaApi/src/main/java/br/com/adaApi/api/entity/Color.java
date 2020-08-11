@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 
 /**
@@ -15,7 +16,7 @@ import javax.persistence.SequenceGenerator;
  * 
  */
 @Entity
-@NamedQuery(name="Color.findAll", query="SELECT c FROM Color c")
+@Table(name="color", schema="mcm_schema")
 public class Color implements Serializable {
 	private static final long serialVersionUID = 1L;
 

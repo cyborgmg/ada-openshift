@@ -13,8 +13,7 @@ import br.com.adaApi.api.enums.ProfileEnum;
  * 
  */
 @Entity
-@Table(name="PERFIL")
-@NamedQuery(name="Profile.findAll", query="SELECT p FROM Profile p")
+@Table(name="perfil", schema="mcm_schema")
 public class Profile implements Serializable {
 	private static final long serialVersionUID = 1L;
 
