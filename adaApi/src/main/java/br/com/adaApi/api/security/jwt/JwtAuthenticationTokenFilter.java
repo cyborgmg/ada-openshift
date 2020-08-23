@@ -15,11 +15,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-
-import br.com.adaApi.api.security.service.RedisService;
-
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 	
 	@Autowired

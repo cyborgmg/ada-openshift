@@ -12,18 +12,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.google.gson.Gson;
 
 import br.com.adaApi.api.entity.User;
 import br.com.adaApi.api.security.jwt.JwtAuthenticationRequest;
 import br.com.adaApi.api.security.jwt.JwtTokenUtil;
 import br.com.adaApi.api.security.model.CurrentUser;
-import br.com.adaApi.api.security.service.RedisService;
 import br.com.adaApi.api.service.UserService;
 
 @RestController

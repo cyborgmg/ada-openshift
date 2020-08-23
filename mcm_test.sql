@@ -2,6 +2,8 @@ CREATE ROLE mcm_test LOGIN ENCRYPTED PASSWORD 'mcm_test' SUPERUSER INHERIT CREAT
 
 CREATE DATABASE mcm_test WITH OWNER = mcm_test ENCODING = 'UTF8' TABLESPACE = pg_default LC_COLLATE = 'en_US.utf8' LC_CTYPE = 'en_US.utf8' CONNECTION LIMIT = -1;
 
+\c mcm_test
+
 CREATE SCHEMA mcm_test_schema AUTHORIZATION mcm_test;
 
 GRANT ALL ON SCHEMA mcm_test_schema TO mcm_test;

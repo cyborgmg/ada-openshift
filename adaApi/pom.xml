@@ -23,6 +23,9 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<jjwt.version>0.7.0</jjwt.version>
+		<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 
 	<dependencies>
@@ -58,7 +61,6 @@
 		<dependency>
 		    <groupId>org.postgresql</groupId>
 		    <artifactId>postgresql</artifactId>
-		    <version>42.2.14</version>
 		</dependency>	
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -94,6 +96,10 @@
 		    <artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 		<!-- REDIS -->
+		<dependency>
+		    <groupId>org.springframework.session</groupId>
+		    <artifactId>spring-session-data-redis</artifactId>
+		</dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
@@ -131,56 +137,12 @@
 	</profiles>	
 
 	<build>
-		<plugins>
-		
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-	            <groupId>org.apache.maven.plugins</groupId>
-	            <artifactId>maven-surefire-plugin</artifactId>
-	            <configuration>
-	                <useSystemClassLoader>false</useSystemClassLoader>
-	            </configuration>
-	        </plugin>
-	        <plugin>
-	            <groupId>org.apache.maven.plugins</groupId>
-	            <artifactId>maven-resources-plugin</artifactId>
-	            <configuration>
-	                <delimiters>
-	                    <delimiter>@</delimiter>
-	                </delimiters>
-	                <resources>
-	                    <resource>
-	                        <directory>src/main/resources</directory>
-	                        <filtering>true</filtering>
-	                    </resource>
-	                </resources>
-	            </configuration>
-	        </plugin>
-	        
-<!-- 			
-			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy-resources</id>
-						<phase>validate</phase>
-						<goals><goal>copy-resources</goal></goals>
-						<configuration>
-							<outputDirectory>${build.directory}/classes/resources/</outputDirectory >
-							<resources>
-								<resource>
-									<directory>../adaFront/dist/ada/</directory>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
- -->
-		</plugins>
+    	<plugins>
+        	<plugin>
+            	<groupId>org.springframework.boot</groupId>
+            	<artifactId>spring-boot-maven-plugin</artifactId>
+        	</plugin>
+    	</plugins>
 	</build>
 
 
