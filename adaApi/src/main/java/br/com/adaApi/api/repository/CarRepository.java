@@ -10,7 +10,7 @@ import br.com.adaApi.api.entity.Car;
 
 public interface CarRepository extends JpaRepository<Car, Long> {
 	
-	@Query("select c from Car c left join c.color where c.brand like :brand ||'%' and nvl(c.color.nome,' ') like :colornome ||'%' and nvl(c.price,0) like :price ||'%' and to_char( nvl(c.saleDate,SYSDATE) , 'dd/mm/yyyy' ) like :saleDate ||'%' and nvl(c.year,0) like :year ||'%'")
+	@Query("select c from Car c left join c.color where COALESCE (c.brand,'') like  :brand ||'%' and COALESCE (c.color.nome,'') like :colornome ||'%' and COALESCE (to_char(c.price,'999999999999999'),'') like :price ||'%' and to_char( COALESCE ( c.saleDate, CURRENT_DATE ) , 'dd/mm/yyyy' ) like :saleDate ||'%' and COALESCE (to_char(c.year,'9999'),'') like :year ||'%'")
 	List<Car> findCarParams(@Param("brand") String brand, @Param("colornome") String colornome, @Param("price") String price, @Param("saleDate") String saleDate, @Param("year") String year);
 
 }

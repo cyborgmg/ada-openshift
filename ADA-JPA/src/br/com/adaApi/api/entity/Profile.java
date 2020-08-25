@@ -3,31 +3,42 @@ package br.com.adaApi.api.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import br.com.adaApi.api.enums.ProfileEnum;
+
 
 /**
  * The persistent class for the PERFIL database table.
  * 
  */
 @Entity
-@Table(name="PERFIL")
-@NamedQuery(name="Profile.findAll", query="SELECT p FROM Profile p")
+@Table(name="perfil", schema="mcm_schema")
 public class Profile implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="PERFIL_ID_GENERATOR", sequenceName="USER_SQ")
+	@SequenceGenerator(name="PERFIL_ID_GENERATOR", sequenceName="PERFIL_SQ", allocationSize = 1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PERFIL_ID_GENERATOR")
 	private long id;
 
 	@Column(name="ENUM")
-	private String role;
+	@Enumerated(EnumType.STRING)
+	private ProfileEnum profile;
 
 	//bi-directional many-to-one association to User
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name="ID_USUARIO")
 	private User usuario;
 
 	public Profile() {
+	}
+
+	public Profile(ProfileEnum profile, User usuario) {
+		super();
+		this.profile = profile;
+		this.usuario = usuario;
 	}
 
 	public long getId() {
@@ -38,12 +49,12 @@ public class Profile implements Serializable {
 		this.id = id;
 	}
 
-	public String getRole() {
-		return role;
+	public ProfileEnum getProfile() {
+		return profile;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setProfile(ProfileEnum profile) {
+		this.profile = profile;
 	}
 
 	public User getUsuario() {

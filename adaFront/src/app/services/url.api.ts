@@ -1,1 +1,2 @@
-export const URL_API = 'http://54.243.248.118:8082' ;
+//export const URL_API = 'http://ada-api-crud-shop.apps.ca-central-1.starter.openshift-online.com' ;
+export const URL_API = 'http://localhost:8080' ;

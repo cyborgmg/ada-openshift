@@ -14,7 +14,7 @@ public class RedisService {
 	@PostConstruct
 	public void ini() {
 		
-		jedis = new Jedis(System.getenv("REDIS_HOST"));
+		jedis = new Jedis(System.getenv("REDIS_HOST"), Integer.parseInt(System.getenv("REDIS_PORT")));
 		jedis.auth(System.getenv("REDIS_PASS"));
 		jedis.select(0);
 	}

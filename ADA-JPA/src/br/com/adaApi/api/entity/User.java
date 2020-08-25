@@ -2,6 +2,10 @@ package br.com.adaApi.api.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -10,27 +14,35 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="USUARIO")
+@Table(name="usuario", schema="mcm_schema")
 @NamedQuery(name="User.findAll", query="SELECT u FROM User u")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="USUARIO_ID_GENERATOR", sequenceName="USER_SQ")
+	@SequenceGenerator(name="USUARIO_ID_GENERATOR", sequenceName="USER_SQ", allocationSize = 1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="USUARIO_ID_GENERATOR")
 	private long id;
 
+	@Column(unique = true)
+	@NotBlank(message = "Email requerido")
+	@Email(message = "Email inválido")
 	private String email;
 
 	private String password;
 
-	private String perfil;
-
 	//bi-directional many-to-one association to Profile
-	@OneToMany(mappedBy="usuario")
-	private List<Profile> perfils;
+	@OneToMany(mappedBy="usuario", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<Profile> perfils = new ArrayList<Profile>();
 
 	public User() {
+	}
+	
+	public User(@NotBlank(message = "Email requerido") @Email(message = "Email inválido") String email, String password, List<Profile> perfils) {
+		super();
+		this.email = email;
+		this.password = password;
+		this.perfils = perfils;
 	}
 
 	public long getId() {
@@ -55,14 +67,6 @@ public class User implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getPerfil() {
-		return this.perfil;
-	}
-
-	public void setPerfil(String perfil) {
-		this.perfil = perfil;
 	}
 
 	public List<Profile> getPerfils() {

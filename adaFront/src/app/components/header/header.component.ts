@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit {
   singOut(): void {
     this.share.token = null;
     this.share.user = null;
-    window.location.href = '/ada/';
+    window.location.href = '/';
   }
 
   getEmailProfile() {

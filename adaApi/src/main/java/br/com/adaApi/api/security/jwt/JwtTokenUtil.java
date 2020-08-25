@@ -3,18 +3,15 @@ package br.com.adaApi.api.security.jwt;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import br.com.adaApi.api.security.service.RedisService;
 import br.com.adaApi.api.utils.Utils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -25,11 +22,9 @@ public class JwtTokenUtil implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	@Autowired
-    private HttpSession session;
-	
 	static final String CLAIM_KEY_USERNAME = "sub";
 	static final String CLAIM_KEY_CREATED = "created";
+	//static final String CLAIM_KEY_EXPIRED = "exp";
 	static final String CLAIM_KEY_EXPIRA = "expi";
 	
 	@Value("${jwt.secret}")
@@ -37,6 +32,9 @@ public class JwtTokenUtil implements Serializable{
 	
 	@Value("${jwt.expiration}")
 	private Long expiration;
+	
+	@Autowired
+	private RedisService redisService;
 	
 	public String getUsernameFromToken(String token) {
 		String username;
@@ -67,7 +65,7 @@ public class JwtTokenUtil implements Serializable{
 			try {
 				
 				
-				Map<String, Object>  claimsRedis = Utils.deserializeJson((String)this.session.getAttribute(token),HashMap.class);
+				Map<String, Object>  claimsRedis = Utils.deserializeJson(redisService.getJedis().get(token),HashMap.class);
 				
 				String sub = (String) claimsRedis.get(CLAIM_KEY_USERNAME);
 				Long exp = (Long) claimsRedis.get(CLAIM_KEY_EXPIRA);
@@ -117,9 +115,7 @@ public class JwtTokenUtil implements Serializable{
 				   .compact();
 		
 		try {
-			
-			this.session.setAttribute(token, Utils.serializeToJson(claims));
-			
+			redisService.getJedis().set(token,  Utils.serializeToJson(claims) );
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
